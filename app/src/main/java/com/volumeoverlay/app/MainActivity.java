@@ -1,11 +1,13 @@
 package com.volumeoverlay.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -17,9 +19,11 @@ public class MainActivity extends Activity {
     public static final String PREFS = "volume_overlay_prefs";
     public static final String KEY_ENABLED = "enabled";
     private static final int REQ_OVERLAY = 100;
+    private static final int REQ_BATTERY_OPT = 101;
 
     private Switch toggleSwitch;
     private TextView statusText;
+    private TextView batteryStatusText;
     private SharedPreferences prefs;
     private boolean suppressToggleCallback = false;
 
@@ -31,9 +35,12 @@ public class MainActivity extends Activity {
         prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         toggleSwitch = findViewById(R.id.toggleSwitch);
         statusText = findViewById(R.id.statusText);
+        batteryStatusText = findViewById(R.id.batteryStatusText);
         Button grantOverlayBtn = findViewById(R.id.grantOverlayBtn);
+        Button batteryOptBtn = findViewById(R.id.batteryOptBtn);
 
         grantOverlayBtn.setOnClickListener(v -> requestOverlayPermission());
+        batteryOptBtn.setOnClickListener(v -> requestIgnoreBatteryOptimizations());
 
         toggleSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
             if (suppressToggleCallback) {
@@ -59,6 +66,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         refreshStatus();
+        refreshBatteryStatus();
         boolean wantsEnabled = prefs.getBoolean(KEY_ENABLED, false);
         setToggleChecked(wantsEnabled && hasOverlayPermission());
 
@@ -105,6 +113,30 @@ public class MainActivity extends Activity {
         statusText.setText(hasOverlayPermission()
                 ? getString(R.string.status_permission_ok)
                 : getString(R.string.status_permission_missing));
+    }
+
+    private boolean isIgnoringBatteryOptimizations() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        return pm != null && pm.isIgnoringBatteryOptimizations(getPackageName());
+    }
+
+    private void requestIgnoreBatteryOptimizations() {
+        if (isIgnoringBatteryOptimizations()) {
+            return;
+        }
+        Intent intent = new Intent(
+                Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, REQ_BATTERY_OPT);
+    }
+
+    private void refreshBatteryStatus() {
+        batteryStatusText.setText(isIgnoringBatteryOptimizations()
+                ? getString(R.string.battery_opt_ok)
+                : getString(R.string.battery_opt_missing));
     }
 
     private void startOverlayService() {

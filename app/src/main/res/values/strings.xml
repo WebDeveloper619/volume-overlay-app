@@ -6,6 +6,9 @@
     <string name="show_button_label">Show Floating Volume Button</string>
     <string name="status_permission_ok">Overlay permission: granted</string>
     <string name="status_permission_missing">Overlay permission: NOT granted (tap the button above)</string>
+    <string name="disable_battery_optimization">Disable Battery Optimization (Recommended)</string>
+    <string name="battery_opt_ok">Battery optimization: already disabled for this app</string>
+    <string name="battery_opt_missing">Battery optimization: ON — tap the button above so the phone does not kill the button</string>
     <string name="notification_channel_name">Volume Overlay Service</string>
     <string name="notification_title">Volume Overlay is active</string>
     <string name="notification_text">Tap to open settings. Turn off the switch in the app to hide the button.</string>

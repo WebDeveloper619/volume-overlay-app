@@ -67,7 +67,7 @@ public class OverlayService extends Service {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
                     getString(R.string.notification_channel_name),
-                    NotificationManager.IMPORTANCE_MIN);
+                    NotificationManager.IMPORTANCE_LOW);
             channel.setShowBadge(false);
             NotificationManager nm = getSystemService(NotificationManager.class);
             if (nm != null) {
@@ -90,7 +90,7 @@ public class OverlayService extends Service {
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
-                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .build();
     }
 
