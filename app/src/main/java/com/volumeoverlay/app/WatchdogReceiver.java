@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class WatchdogReceiver extends BroadcastReceiver {
 
-    private static final long INTERVAL_MS = 10 * 60 * 1000L;
+    private static final long INTERVAL_MS = 60 * 1000L;
     private static final int REQUEST_CODE = 500;
 
     @Override
