@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Volume Overlay</string>
+    <string name="instructions">This app shows a small floating +/- button on your screen to control media volume. Drag it anywhere. It keeps running even after you close this app or the screen turns off.</string>
+    <string name="grant_overlay">Grant Overlay Permission</string>
+    <string name="show_button_label">Show Floating Volume Button</string>
+    <string name="status_permission_ok">Overlay permission: granted</string>
+    <string name="status_permission_missing">Overlay permission: NOT granted (tap the button above)</string>
+    <string name="notification_channel_name">Volume Overlay Service</string>
+    <string name="notification_title">Volume Overlay is active</string>
+    <string name="notification_text">Tap to open settings. Turn off the switch in the app to hide the button.</string>
+</resources>
