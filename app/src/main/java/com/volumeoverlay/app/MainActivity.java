@@ -38,9 +38,11 @@ public class MainActivity extends Activity {
         batteryStatusText = findViewById(R.id.batteryStatusText);
         Button grantOverlayBtn = findViewById(R.id.grantOverlayBtn);
         Button batteryOptBtn = findViewById(R.id.batteryOptBtn);
+        Button autoStartBtn = findViewById(R.id.autoStartBtn);
 
         grantOverlayBtn.setOnClickListener(v -> requestOverlayPermission());
         batteryOptBtn.setOnClickListener(v -> requestIgnoreBatteryOptimizations());
+        autoStartBtn.setOnClickListener(v -> AutoStartHelper.openAutoStartSettings(this));
 
         toggleSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
             if (suppressToggleCallback) {
@@ -50,6 +52,7 @@ public class MainActivity extends Activity {
                 if (hasOverlayPermission()) {
                     prefs.edit().putBoolean(KEY_ENABLED, true).apply();
                     startOverlayService();
+                    WatchdogReceiver.schedule(this);
                 } else {
                     // Revert switch until permission is actually granted.
                     setToggleChecked(false);
@@ -58,6 +61,7 @@ public class MainActivity extends Activity {
             } else {
                 prefs.edit().putBoolean(KEY_ENABLED, false).apply();
                 stopOverlayService();
+                WatchdogReceiver.cancel(this);
             }
         });
     }
@@ -74,6 +78,7 @@ public class MainActivity extends Activity {
         // previously asked for the overlay to be shown, start it now.
         if (wantsEnabled && hasOverlayPermission()) {
             startOverlayService();
+            WatchdogReceiver.schedule(this);
         }
     }
 
@@ -104,6 +109,7 @@ public class MainActivity extends Activity {
             refreshStatus();
             if (hasOverlayPermission() && prefs.getBoolean(KEY_ENABLED, false)) {
                 startOverlayService();
+                WatchdogReceiver.schedule(this);
                 setToggleChecked(true);
             }
         }

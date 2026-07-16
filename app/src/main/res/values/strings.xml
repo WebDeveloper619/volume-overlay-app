@@ -9,6 +9,8 @@
     <string name="disable_battery_optimization">Disable Battery Optimization (Recommended)</string>
     <string name="battery_opt_ok">Battery optimization: already disabled for this app</string>
     <string name="battery_opt_missing">Battery optimization: ON — tap the button above so the phone does not kill the button</string>
+    <string name="open_autostart_settings">Open Auto-start Settings (ColorOS)</string>
+    <string name="autostart_hint">On Oppo/ColorOS, also enable \"Auto-start\" / \"Allow background running\" for this app on the screen that opens — this is the setting that most affects whether the button survives after you close the app.</string>
     <string name="notification_channel_name">Volume Overlay Service</string>
     <string name="notification_title">Volume Overlay is active</string>
     <string name="notification_text">Tap to open settings. Turn off the switch in the app to hide the button.</string>

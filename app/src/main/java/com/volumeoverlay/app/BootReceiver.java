@@ -27,6 +27,7 @@ public class BootReceiver extends BroadcastReceiver {
             } else {
                 context.startService(serviceIntent);
             }
+            WatchdogReceiver.schedule(context);
         }
     }
 }

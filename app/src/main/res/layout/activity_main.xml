@@ -38,7 +38,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/autoStartBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/open_autostart_settings" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
+        android:text="@string/autostart_hint"
         android:textSize="13sp" />
 
     <LinearLayout
